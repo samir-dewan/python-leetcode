@@ -23,14 +23,11 @@ def checkCharHasNumNearby(charcoord, numcoords_array):
             for numcoord in numcoords["coords"]:
                 distance = math.sqrt((charcoord[0] - numcoord[0]) ** 2 + (charcoord[1] - numcoord[1]) ** 2)
                 if distance <= math.sqrt(2):
-                    print("charcoords: ", charcoord, " is close to numcoord: ", numcoord)
                     adjacentCount += 1
                     adjacentNumbers.append(numcoords["number"])
                     break
     
     if adjacentCount > 1:
-        print('got it')
-        print(adjacentNumbers)
         return adjacentNumbers[0] * adjacentNumbers[1]
 
     return 0
@@ -45,7 +42,6 @@ def checkCharHasNumNearby(charcoord, numcoords_array):
 #else return nothing
 
 for index, row in enumerate(f):
-    print("index: ", index)
     y = re.finditer("[0-9][0-9][0-9]|[0-9][0-9]|[0-9]", row)
     z = re.finditer("[*]", row)
     for o in y:
@@ -55,24 +51,8 @@ for index, row in enumerate(f):
         charcoords = convertChartoCoords(j.span(), index)
         char_coords.append(charcoords)
 
-print("num_coords: ", num_coords)
-print("char_coords: ", char_coords)
-
-#find every number within 
-#finditer gives spans (place where item starts, item has ended by this point)
-#therefore if we have an index of x and a span of (n, n+2) the number would be in position
-#(x, n), (x, n+1)
-#and the area we would need to search for a special character would be:
-#(x-1, n-1) to (x+1, n+2)
-
 for obj in char_coords:
     gearRatio = checkCharHasNumNearby(obj, num_coords)
     totalSum += gearRatio
 
 print(totalSum)
-
-
-#I have coordinates for all * signs
-#and coordinates for all numbers
-#for every * sign coordinate:
-#check the list of numbers and find two numbers that are next to the sign coordinate
