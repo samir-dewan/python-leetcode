@@ -2,8 +2,6 @@ import json
 
 f = open("D:\Coding\Python-projects\leetcode\AdventofCode\day-2\game.txt", "r")
 
-first = "Game 1: 1 red, 3 blue, 11 green; 1 blue, 5 red; 3 blue, 5 green, 13 red; 6 red, 1 blue, 4 green; 16 red, 12 green"
-
 results_list = []
 gameSum = 0
 redC = 12
