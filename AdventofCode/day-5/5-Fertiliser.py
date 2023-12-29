@@ -1,6 +1,5 @@
 import re
-# f = open("D:\Coding\Python-projects\leetcode\AdventofCode\day-5\almanac.txt", "r")
-f = open("D:\Coding\Python-projects\leetcode\AdventofCode\day-5\almanac.txt", "r")
+f = open("D:\Coding\Python-projects\leetcode\AdventofCode\day-5\seeds.txt", "r")
 #seed
 #24
 
@@ -29,34 +28,61 @@ f = open("D:\Coding\Python-projects\leetcode\AdventofCode\day-5\almanac.txt", "r
 #seed is in range of 50 + (6 - 1)
 #will return destination of 90 + (6 - 1)
 
-almanac = {}
-
-seeds = []
-seedToSoil = []
-soilToFertiliser = []
-fertiliserToWater = []
-waterToLight = []
-lightToTemp = []
-tempToHumidity = []
-humidityToLocation = []
-
-def sourceChecker(almanac, input):
+def converter(almanac, input):
     if almanac['s'] <= input <= almanac['s'] + almanac['r'] - 1:
     #if almanac[1] <= seed <= almanac[1] + almanac[0]:
         #return (almanac[2] + almanac[1])
-        return almanac['d'] + input - almanac['s']
+        print("almanac['s']: ", almanac['s'], "l or e input: ", input, "l or e almanac['s'] + almanac['r'] - 1: ", almanac['r'] + almanac['s'] - 1)
+        print("destination number returned: ", almanac['d'] + input - almanac['s'], "from destination number: ", almanac["d"])
+        return almanac['d'] + input - almanac['s'], True
+    else:
+        return input, False
 
 #input is 50
 #almanac is [r = 2, s = 49, d = 79]
 #s+r-1 == input
 #returns 79 + 50 - 49 = 80
-    
-def lineToObject(line):
-    coords = re.split("/s", line)
-    return {'d': coords[0], 's': coords[1], 'r': coords[2]}
 
-def sectionToObjects(section):
-    sections = re.split(":", section)
-    return sections
+def sectionToObjects(file):
+    text = file.read()
+    sections = re.split(r"\smap:\n", text)
+    almanac = []
+    pattern = re.compile(r'(\d+)\s+(\d+)\s+(\d+)\n')
+    seedsNum = re.compile(r'(\d+)\s+')
+    seeds = seedsNum.findall(sections[0]) #We have a list of seed numbers
+    pop = []
+    for seed in seeds:
+        pop.append(int(seed))
+    sections.pop(0)
+    for i, section in enumerate(sections):
+        results = []
+        rows = pattern.findall(section)
+        for row in rows:
+            results.append({"d": int(row[0]), "s": int(row[1]), "r": int(row[2])})
+        almanac.append(results)
+    return pop, almanac
 
-sectionToObjects(f)
+seeds, almanacs = sectionToObjects(f)
+print("seeds: ", seeds)
+print("almanacs: ", almanacs)
+
+testseed = 2149186375
+locationList = []
+
+def seedThroughAlmanacs(almanacs, seed):
+    currentNum = seed
+    for i, alm in enumerate(almanacs):
+        nextStage = False
+        for dsr in alm:
+            print("dsr: ", dsr, "in alm: ", i + 1)
+            currentNum, nextStage = converter(dsr, currentNum)
+            if nextStage:
+                break
+    print("currentNum is now: ", currentNum)
+    return currentNum
+
+
+for seed in seeds:
+    locationList.append(seedThroughAlmanacs(almanacs, seed))
+print(locationList)
+print(min(locationList))
