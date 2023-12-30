@@ -86,3 +86,4 @@ for seed in seeds:
     locationList.append(seedThroughAlmanacs(almanacs, seed))
 print(locationList)
 print(min(locationList))
+seedThroughAlmanacs(almanacs, min(locationList))
