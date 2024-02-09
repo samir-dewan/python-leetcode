@@ -15,5 +15,7 @@ def ValidPalindrome(self, s: str) -> bool:
         
         if s[l].lower() != s[r].lower():
             return False
+    
+        l, r = l + 1, r - 1
         
     return True
