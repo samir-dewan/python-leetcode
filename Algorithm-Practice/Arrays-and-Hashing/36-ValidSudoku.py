@@ -10,7 +10,7 @@ def ValidSudoku(board: list[list[str]]) -> bool:
             if board[r][c] == ".": #if it's blank carry on
                 continue
             if (board[r][c] in rows[r] or #if the number in row, column, is already in a row, column, or square (found by the remainder)
-                board[r][c] in cols[r] or
+                board[r][c] in cols[c] or
                 board[r][c] in squares[(r // 3, c // 3)]):
                 return False #it already is in the row, column, or square
             cols[c].add(board[r][c]) #add the number to the columns, rows, and squares
