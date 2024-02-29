@@ -21,4 +21,4 @@ def generateParenthesis(n) -> list[str]:
     backtrack(0, 0)
     return res
 
-print(generateParenthesis(4))
+print(generateParenthesis(3))
