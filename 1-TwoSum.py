@@ -10,7 +10,7 @@ class Solution:
 
 #hashmap answer, with youtube help.
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
         hashmap = {}
         for i, j in enumerate(nums):
             diff = target - j
@@ -18,4 +18,4 @@ class Solution:
                 return [hashmap[diff], i]
             hashmap[j] = i
             #if target - j is in the hashmap, then return [hashmapKey, i]
-            #else add an entry [i, j] into the hashmap
+            #else add an entry [j, i] into the hashmap
